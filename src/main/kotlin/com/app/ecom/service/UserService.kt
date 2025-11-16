@@ -88,7 +88,7 @@ class UserService(
     ) {
         // --- addressの部分変更ロジック ---
         val updatedAddress = userRequest.address?.let { addressDto ->
-            val baseAddress = existingUser.address?: Address()
+            val baseAddress = existingUser.address?:Address()
             baseAddress.copy(
                 street = addressDto.street?:baseAddress.street,
                 city = addressDto.city?:baseAddress.city,

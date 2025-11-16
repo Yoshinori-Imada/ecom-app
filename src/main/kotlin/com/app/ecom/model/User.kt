@@ -1,12 +1,12 @@
 package com.app.ecom.model
 
-import jakarta.persistence.* // ←　JPAのアノテーションをインポート
+import jakarta.persistence.*
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "users")
+@Table(name = "users_table")
 data class User (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ data class User (
 
     // one on one relationship
     @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
-    // 結合するからむ（外部キー）の名前を"address_id"に指定
+    // 結合するカラム（外部キー）の名前を"address_id"に指定
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     val address: Address? = null, // Addressオブジェクトを直接持つ
 
