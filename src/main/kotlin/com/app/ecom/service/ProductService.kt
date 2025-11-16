@@ -5,8 +5,11 @@ import com.app.ecom.dto.ProductResponseDto
 import com.app.ecom.model.Product
 import com.app.ecom.repositories.ProductRepository
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.PathVariable
 
 @Service
 class ProductService(
@@ -35,7 +38,7 @@ class ProductService(
         val existingProduct = productRepository.findById(id).orElse(null)
 
         // 2. 見つかったら、DTOの内容で変更
-        return existingProduct?.let { productToUpdate->
+        return existingProduct?.let { productToUpdate ->
             // 3. DTOからEntityへ変更内容をマッピング
             val updatedProduct = productToUpdate.copy(
                 name = request.name,
@@ -43,7 +46,7 @@ class ProductService(
                 price = request.price,
                 stockQuantity = request.stockQuantity,
                 category = request.category,
-                imageUrl = request.imageUrl?:productToUpdate.imageUrl
+                imageUrl = request.imageUrl ?: productToUpdate.imageUrl
             )
             // 4. DBに保存（更新）し、ResponseDTOに変換して返す
             productRepository.save(updatedProduct).toResponseDto()
@@ -55,16 +58,31 @@ class ProductService(
             .map { it.toResponseDto() }
     }
 
-    @Transactional
-    fun deleteProduct(id: Long): Boolean {
-        val product = productRepository.findByIdOrNull(id)
 
-        return product?.let {
-            val deactivatedProduct = it.copy(active = false)
-            productRepository.save(deactivatedProduct)
-            true
-        } ?: false
-    }
+   @Transactional
+   fun deleteProduct(id: Long): Boolean {
+       val product =productRepository.findByIdOrNull(id)
+       return product?.let {
+           val deactivatedProduct = it.copy(active=false)
+           productRepository.save(deactivatedProduct)
+           true
+       } ?: false
+   }
+
+//    @DeleteMapping("/{id}")
+//    fun deleteProduct(
+//        @PathVariable id: Long
+//    ): ResponseEntity<Void> {
+//        val isSuccess = productService.deleteProduct(id)
+//
+//
+//        return if (isSuccess) {
+//            ResponseEntity.noContent().build()
+//        } else {
+//            ResponseEntity.notFound().build()
+//        }
+//    }
+
 
     // --- マッパー (Entity <-> DTO 変換ロジック) ---
     private fun ProductRequestDto.toEntity(): Product {
@@ -92,4 +110,11 @@ class ProductService(
             updatedAt = this.updatedAt.toString()
         )
     }
+
+    @Transactional(readOnly = true)
+    fun getProductById(id: Long): ProductResponseDto? {
+        return productRepository.findByIdOrNull(id)
+            ?.toResponseDto()
+    }
+
 }

@@ -7,6 +7,7 @@ import com.app.ecom.repositories.ProductRepository
 import com.app.ecom.service.ProductService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -40,15 +41,35 @@ class ProductController(
         return productService.updateProduct(id, request)
             ?.let { ResponseEntity.ok(it) }
             ?: ResponseEntity.notFound().build()
-
     }
 
-    /*
     @GetMapping
     fun getAllProducts(): ResponseEntity<List<ProductResponseDto>> {
         val products = productService.getAllProducts()
         return ResponseEntity.ok(products)
     }
-     */
+
+    @GetMapping("/{id}")
+    fun getProductById(
+        @PathVariable id: Long
+    ): ResponseEntity<ProductResponseDto> {
+
+        return productService.getProductById(id)
+            ?.let { ResponseEntity.ok(it) }
+            ?: ResponseEntity.notFound().build()
+    }
+
+    @DeleteMapping("/{id}")
+    fun deleteProduct(
+        @PathVariable id: Long
+    ): ResponseEntity<Void> {
+        val isSuccess = productService.deleteProduct(id)
+        
+        return if(isSuccess) {
+            ResponseEntity.noContent().build()
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
 
 }
