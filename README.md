@@ -1,2 +1,2 @@
 個人的なポートフォリオ用のEcommerce-WEBアプリです。
-２０２５年11月１６日現在、SpringBoot＆Kotlinで制作中です。
+SpringBoot＆Kotlinで制作中です。
