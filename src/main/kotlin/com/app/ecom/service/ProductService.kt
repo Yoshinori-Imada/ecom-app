@@ -5,11 +5,8 @@ import com.app.ecom.dto.ProductResponseDto
 import com.app.ecom.model.Product
 import com.app.ecom.repositories.ProductRepository
 import org.springframework.data.repository.findByIdOrNull
-import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.PathVariable
 
 @Service
 class ProductService(
@@ -68,21 +65,6 @@ class ProductService(
            true
        } ?: false
    }
-
-//    @DeleteMapping("/{id}")
-//    fun deleteProduct(
-//        @PathVariable id: Long
-//    ): ResponseEntity<Void> {
-//        val isSuccess = productService.deleteProduct(id)
-//
-//
-//        return if (isSuccess) {
-//            ResponseEntity.noContent().build()
-//        } else {
-//            ResponseEntity.notFound().build()
-//        }
-//    }
-
 
     // --- マッパー (Entity <-> DTO 変換ロジック) ---
     private fun ProductRequestDto.toEntity(): Product {

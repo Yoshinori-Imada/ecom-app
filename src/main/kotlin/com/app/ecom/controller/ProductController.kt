@@ -2,8 +2,6 @@ package com.app.ecom.controller
 
 import com.app.ecom.dto.ProductRequestDto
 import com.app.ecom.dto.ProductResponseDto
-import com.app.ecom.model.Product
-import com.app.ecom.repositories.ProductRepository
 import com.app.ecom.service.ProductService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
