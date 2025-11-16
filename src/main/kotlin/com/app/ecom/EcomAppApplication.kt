@@ -10,4 +10,5 @@ class EcomAppApplication
 
 fun main(args: Array<String>) {
 	runApplication<EcomAppApplication>(*args)
+
 }
