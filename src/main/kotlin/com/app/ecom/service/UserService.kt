@@ -6,9 +6,9 @@ import com.app.ecom.dto.UserResponseDto
 import com.app.ecom.model.Address
 import com.app.ecom.repositories.UserRepository
 import com.app.ecom.model.User
-import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class UserService(
@@ -23,8 +23,8 @@ class UserService(
         return userRepository.findByIdOrNull(id)?.toUserResponseDto()
     }
 
-//    @Transactional
     // [Create] DTO -> Entity に変換
+    @Transactional
     fun addUser(userRequest: UserRequestDto) {
         val user = userRequest.toEntity()
         userRepository.save(user)

@@ -4,6 +4,7 @@ import com.app.ecom.dto.ProductRequestDto
 import com.app.ecom.dto.ProductResponseDto
 import com.app.ecom.model.Product
 import com.app.ecom.repositories.ProductRepository
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -42,21 +43,28 @@ class ProductService(
                 price = request.price,
                 stockQuantity = request.stockQuantity,
                 category = request.category,
-                imageUrl = request.imageUrl
+                imageUrl = request.imageUrl?:productToUpdate.imageUrl
             )
             // 4. DBに保存（更新）し、ResponseDTOに変換して返す
             productRepository.save(updatedProduct).toResponseDto()
         }
-
-       /*
-        fun getAllProducts(): List<ProductResponseDto> {
-            return productRepository.findAll().map { it.toResponseDto() }
-        }
-        */
-
     }
 
+    fun getAllProducts(): List<ProductResponseDto> {
+        return productRepository.findByActive(true)
+            .map { it.toResponseDto() }
+    }
 
+    @Transactional
+    fun deleteProduct(id: Long): Boolean {
+        val product = productRepository.findByIdOrNull(id)
+
+        return product?.let {
+            val deactivatedProduct = it.copy(active = false)
+            productRepository.save(deactivatedProduct)
+            true
+        } ?: false
+    }
 
     // --- マッパー (Entity <-> DTO 変換ロジック) ---
     private fun ProductRequestDto.toEntity(): Product {

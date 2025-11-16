@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface ProductRepository : JpaRepository<Product, Long> {
+    fun findByActive(active: Boolean): List<Product>
 
 }
