@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -41,6 +42,7 @@ class ProductController(
             ?: ResponseEntity.notFound().build()
     }
 
+    // --- READ (GET) ---
     @GetMapping
     fun getAllProducts(): ResponseEntity<List<ProductResponseDto>> {
         val products = productService.getAllProducts()
@@ -57,6 +59,7 @@ class ProductController(
             ?: ResponseEntity.notFound().build()
     }
 
+    // --- DELETE ---
     @DeleteMapping("/{id}")
     fun deleteProduct(
         @PathVariable id: Long
@@ -68,6 +71,15 @@ class ProductController(
         } else {
             ResponseEntity.notFound().build()
         }
+    }
+
+    // --- SEARCH ---
+    @GetMapping("/search")
+    fun searchProducts(
+        @RequestParam("keyword") keyword: String
+    ): ResponseEntity<List<ProductResponseDto>> {
+        val products = productService.searchProducts(keyword)
+        return ResponseEntity.ok(products)
     }
 
 }

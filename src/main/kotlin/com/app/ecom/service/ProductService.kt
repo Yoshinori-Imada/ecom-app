@@ -50,12 +50,20 @@ class ProductService(
         }
     }
 
+    // --- GET ---
+    @Transactional(readOnly = true)
     fun getAllProducts(): List<ProductResponseDto> {
         return productRepository.findByActive(true)
             .map { it.toResponseDto() }
     }
 
+    @Transactional(readOnly = true)
+    fun getProductById(id: Long): ProductResponseDto? {
+        return productRepository.findByIdAndActive(id, true)
+            ?.toResponseDto()
+    }
 
+    // --- DELETE ---
    @Transactional
    fun deleteProduct(id: Long): Boolean {
        val product =productRepository.findByIdOrNull(id)
@@ -65,6 +73,12 @@ class ProductService(
            true
        } ?: false
    }
+
+    // --- SEARCH ---
+    fun searchProducts(keyword: String): List<ProductResponseDto> {
+        return productRepository.searchProducts(keyword)
+            .map { it.toResponseDto() }
+    }
 
     // --- マッパー (Entity <-> DTO 変換ロジック) ---
     private fun ProductRequestDto.toEntity(): Product {
@@ -91,12 +105,6 @@ class ProductService(
             createdAt = this.createdAt.toString(),
             updatedAt = this.updatedAt.toString()
         )
-    }
-
-    @Transactional(readOnly = true)
-    fun getProductById(id: Long): ProductResponseDto? {
-        return productRepository.findByIdOrNull(id)
-            ?.toResponseDto()
     }
 
 }
