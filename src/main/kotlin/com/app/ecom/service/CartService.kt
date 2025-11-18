@@ -60,4 +60,9 @@ class CartService(
         return user?.let { cartItemRepository.findByUserWithProducts(it) } ?: emptyList()
     }
 
+    @Transactional
+    fun clearCart(userId: Long) {
+        val user = userRepository.findByIdOrNull(userId) ?: return
+        cartItemRepository.deleteByUser(user)
+    }
 }

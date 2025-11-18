@@ -4,7 +4,6 @@ spring:
 
   profiles:
     active: localt
-  # データベース接続設定
   datasource:
     url: jdbc:postgresql://localhost:5432/julia_db
     username: julia_user
@@ -16,21 +15,13 @@ spring:
   jpa:
 
     hibernate:
-      # create:　起動のたびにテーブルを全部削除して再生成する
-      # update:　起動時に足りないテーブルやカラムだけを追加・更新する
-      # validate:　Entityとテーブルが一致しているか検証する（本番推奨）
-      # none:　何もしない（本番推奨）
       ddl-auto: create
 
     properties:
       hibernate:
-        # （ログを見やすくフォーマットする設定　ー　任意）
         format_sql: true
-        # DBの方言（Dialect）をPostgreSQLに指定
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
-    # (任意) 実行されるSQLをコンソールに表示
     show-sql: true
 
-    # OSIVを無効にする設定
     open-in-view: false

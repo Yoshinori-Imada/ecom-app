@@ -25,8 +25,7 @@ data class Order(
     val items: List<OrderItem>  = ArrayList(),
 
     @CreationTimestamp
-    val createdAT: LocalDateTime? = null,
+    val createdAt: LocalDateTime? = null,
     @UpdateTimestamp
     val updatedAt: LocalDateTime? = null
-
     )

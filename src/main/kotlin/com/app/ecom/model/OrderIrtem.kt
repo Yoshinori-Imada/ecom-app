@@ -18,6 +18,7 @@ data class OrderItem(
     @JoinColumn(name = "product_id", nullable = false)
     val product: Product,
     val quantity: Int,
-    val price: BigDecimal
+    val price: BigDecimal,
+    val subTotal: BigDecimal = price * BigDecimal(quantity)
 
 )

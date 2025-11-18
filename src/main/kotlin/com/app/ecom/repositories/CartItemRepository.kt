@@ -6,6 +6,7 @@ import com.app.ecom.model.User
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
+import org.springframework.transaction.annotation.Transactional
 
 @Repository
 interface CartItemRepository : JpaRepository<CartItem, Long> {
@@ -23,5 +24,7 @@ interface CartItemRepository : JpaRepository<CartItem, Long> {
 
     @Query(JOIN_FETCH_BY_USER)
     fun findByUserWithProducts(user: User): List<CartItem>
+
+    fun deleteByUser(user: User)
 
 }
