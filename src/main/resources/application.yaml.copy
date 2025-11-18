@@ -6,11 +6,9 @@ spring:
     active: localt
   # データベース接続設定
   datasource:
-    # JDBC URLをPostgreSQL用に変更
-    # Fedora (localhost) からポート5432のjulia_dbに接続
     url: jdbc:postgresql://localhost:5432/julia_db
     username: julia_user
-  #  password: ${DB_PASSWORD} # YAMLに書いたパスワード
+  #  password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
 # ----------------------------------------------------
@@ -33,3 +31,6 @@ spring:
 
     # (任意) 実行されるSQLをコンソールに表示
     show-sql: true
+
+    # OSIVを無効にする設定
+    open-in-view: false

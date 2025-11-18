@@ -53,4 +53,11 @@ class CartService(
         }
         return true
     }
+
+    // --- ユーザーのカートの内容を取得するメソッド ---
+    fun getCartItems(userId: Long): List<CartItem> {
+        val user = userRepository.findByIdOrNull(userId)
+        return user?.let { cartItemRepository.findByUserWithProducts(it) } ?: emptyList()
+    }
+
 }
