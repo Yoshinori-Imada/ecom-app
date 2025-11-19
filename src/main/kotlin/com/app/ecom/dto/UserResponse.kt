@@ -11,5 +11,4 @@ data class UserResponseDto(
     val phone: String?,
     val role: UserRole,
     val address: AddressDto?
-
-    )
+ )

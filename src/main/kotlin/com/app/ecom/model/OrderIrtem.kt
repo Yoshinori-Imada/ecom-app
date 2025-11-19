@@ -20,5 +20,4 @@ data class OrderItem(
     val quantity: Int,
     val price: BigDecimal,
     val subTotal: BigDecimal = price * BigDecimal(quantity)
-
 )

@@ -29,5 +29,4 @@ data class CartItem(
     val createdAt: java.time.LocalDateTime? = null,
     @CreationTimestamp
     val updatedAt: java.time.LocalDateTime? = null
-
     )

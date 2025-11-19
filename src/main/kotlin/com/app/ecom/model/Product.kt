@@ -26,4 +26,4 @@ data class Product (
     val createdAt: LocalDateTime? = null,
     @UpdateTimestamp
     val updatedAt: LocalDateTime? = null
-    )
+)

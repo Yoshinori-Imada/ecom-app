@@ -14,5 +14,4 @@ data class Address(
     val state: String? = null,
     val country: String? = null,
     val zipCode: String? = null
-
 )
